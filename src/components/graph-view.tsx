@@ -1,21 +1,17 @@
-import React, { SetStateAction, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Network from "react-vis-network-graph";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid";                                 //REMOVER BLIBIOTECA DEPOISS
 import { _data } from "../data/data";
+import { GraphViewProps } from "../interfaces/graph-view-props";
 
-export interface GraphViewProps {
-
-  handleActive: any,
-  handleTitle: any,
-  handleDescription: any,
-  handleImagePath: any,
-
-}
-
-export default function GraphView({ handleActive, handleTitle, handleDescription, handleImagePath }: GraphViewProps) {
+export default function GraphView({
+  handleActive,
+  handleTitle,
+  handleDescription,
+  handleImagePath
+}: GraphViewProps) {
   const graphRef = useRef(null);
-  const [datas, setDatas] = useState("--");
-  const [data, setData] = useState(_data);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
 
   const options = {
     interaction: {
@@ -59,54 +55,54 @@ export default function GraphView({ handleActive, handleTitle, handleDescription
     }
   };
 
-  const handleNodeClick = (event: { edges: string[], event: {}, items: [], nodes: string[], pointer: {} }) => {
-
-    
-    const data = _data.nodes.find(item => item.id === datas);
-    console.log(event)
-    setDatas(event.nodes[0]);
-    handleActive(true);
-    handleTitle(data?.id);
-    handleDescription(data?.label);
-    handleImagePath(data?.image);
-
-
+  const handleNodeClick = (event: {
+    edges: string[];
+    event: {};
+    items: [];
+    nodes: string[];
+    pointer: {};
+  }) => {
+    const selectedNode = _data.nodes.find(
+      item => item.id === event.nodes[0]
+    );
+    setSelectedNodeId(event.nodes[0]);
+    handleTitle(selectedNode?.id || '');
+    handleDescription(selectedNode?.description || '');
+    handleImagePath(selectedNode?.image || '');
   };
 
   const handleOpenModal = () => {
-
-  }
-
+    handleActive(true);
+  };
 
   return (
-    <>
-      <Grid>
-        <Grid item md={7} style={{ display: "flex" }}>
+    <div className="bg-gray-200 min-h-screen py-8">
+      <div className="mx-auto max-w-7xl">
+        {/* Grafo */}
+        <div className="border border-gray-300 rounded-lg mb-8 bg-white">
           <Network
-            graph={data}
+            graph={_data}
             ref={graphRef}
             options={options}
             events={{
               click: handleNodeClick
             }}
-            style={{ display: "flex", height: "40rem" }}
+            style={{ height: "40rem" }}
           />
-        </Grid>
-        <Grid item md={3}>
-          <div>
-            <p
-              style={{
-                fontSize: "1.5rem",
-                display: "flex",
-                justifyContent: "center",
-                fontFamily: "Verdana"
-              }}
-            >
-              <b>{datas}</b>
-            </p>
-          </div>
-        </Grid>
-      </Grid>
-    </>
+        </div>
+
+        {/* Texto com botão para abrir modal */}
+        <div className="text-center">
+          <p className="text-2xl mb-4">{selectedNodeId}</p>
+          {selectedNodeId && (
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleOpenModal}>
+              Abrir Modal
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
   );
+
+
 }
