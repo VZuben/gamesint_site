@@ -1,14 +1,13 @@
-import React, { useRef, useState } from "react";
-import Network from "react-vis-network-graph";
-import Grid from "@mui/material/Grid";                                 //REMOVER BLIBIOTECA DEPOISS
+import { useRef, useState } from "react";
+import Network from "react-vis-network-graph";                              
 import { _data } from "../data/data";
 import { GraphViewProps } from "../interfaces/graph-view-props";
 
 export default function GraphView({
-  handleActive,
-  handleTitle,
-  handleDescription,
-  handleImagePath
+  setActive,
+  setTitle,
+  setDescription,
+  setImagePath
 }: GraphViewProps) {
   const graphRef = useRef(null);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
@@ -16,7 +15,9 @@ export default function GraphView({
   const options = {
     interaction: {
       selectable: true,
-      hover: true
+      hover: true,
+      zoomView: false,
+      dragView: false,
     },
     manipulation: {
       enabled: true,
@@ -27,34 +28,35 @@ export default function GraphView({
       editEdge: true,
       deleteNode: false,
       deleteEdge: true,
-      shapeProperties: {
-        borderDashes: false,
-        useImageSize: false,
-        useBorderWithImage: false
-      },
-      controlNodeStyle: {
-        shape: "dot",
-        size: 6,
-        color: {
-          background: "#ff0000",
-          border: "#3c3c3c",
-          highlight: {
-            background: "#07f968",
-            border: "#3c3c3c"
-          },
-          borderWidth: 2,
-          borderWidthSelected: 2
-        }
-      },
-      height: "100%",
-      color: "green",
-      hover: "true",
-      nodes: {
-        size: 20
-      }
+      // shapeProperties: {
+      //   borderDashes: false,
+      //   useImageSize: false,
+      //   useBorderWithImage: false
+      // },
+      // controlNodeStyle: {
+      //   shape: "dot",
+      //   size: 6,
+      //   color: {
+      //     background: "#ff0000",
+      //     border: "#3c3c3c",
+      //     highlight: {
+      //       background: "#07f968",
+      //       border: "#3c3c3c"
+      //     },
+      //     borderWidth: 2,
+      //     borderWidthSelected: 2
+      //   }
+      // },
+      // height: "100%",
+      // color: "green",
+      // hover: "true",
+      // nodes: {
+      //   size: 20
+      // }
     }
   };
-
+  let addEdge = document.getElementsByClassName('vis-labal');
+  console.log(addEdge.length)
   const handleNodeClick = (event: {
     edges: string[];
     event: {};
@@ -66,13 +68,13 @@ export default function GraphView({
       item => item.id === event.nodes[0]
     );
     setSelectedNodeId(event.nodes[0]);
-    handleTitle(selectedNode?.id || '');
-    handleDescription(selectedNode?.description || '');
-    handleImagePath(selectedNode?.image || '');
+    setTitle(selectedNode?.id || '');
+    setDescription(selectedNode?.description || '');
+    setImagePath(selectedNode?.image || '');
   };
 
   const handleOpenModal = () => {
-    handleActive(true);
+    setActive(true);
   };
 
   return (
@@ -103,6 +105,4 @@ export default function GraphView({
       </div>
     </div>
   );
-
-
 }

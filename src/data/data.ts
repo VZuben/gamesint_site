@@ -6,7 +6,7 @@ export const _data = {
         shape: "image",
         image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4qneFgROiufDyIrsXWpq_GhoQWnnxHuoclPljXeXgtlcGEParu75dPQ4TLafJeLJssXc&usqp=CAU",
-        size: 20
+        size: 20,
       },
       {
         id: "IBM",

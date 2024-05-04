@@ -1,0 +1,26 @@
+.vis-close {
+    opacity: 0;
+    pointer-events: none;
+}
+.vis-label {
+    font-size: 0; 
+}
+.vis-button.vis-back .vis-label::before{
+    content: "Cancelar";
+    font-size:12px;
+
+}
+.vis-button.vis-connect .vis-label::before{
+    content:"Adicionar Conexão";
+    font-size:12px;
+}
+.vis-button.vis-edit .vis-label::before{
+    content: "Editar Conexão";
+    font-size:12px;
+
+}
+.vis-button.vis-delete .vis-label::before{
+    content: "Deletar Conexão";
+    font-size:12px;
+
+}

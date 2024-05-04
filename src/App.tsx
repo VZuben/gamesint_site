@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import GraphView from "./components/graph-view";
 import Modal from "./components/modal";
 import './main.css';
@@ -12,10 +12,10 @@ export default function App() {
   return (
     <>
       <GraphView
-        handleActive={setModalActive}
-        handleTitle={setModalTitle}
-        handleDescription={setModalDescription}
-        handleImagePath={setModalImagePath}
+        setActive={setModalActive}
+        setTitle={setModalTitle}
+        setDescription={setModalDescription}
+        setImagePath={setModalImagePath}
       />
       <Modal
         active={modalActive}

@@ -1,6 +1,6 @@
 export interface GraphViewProps {
-    handleActive: React.Dispatch<React.SetStateAction<boolean>>;
-    handleTitle: React.Dispatch<React.SetStateAction<string>>;
-    handleDescription: React.Dispatch<React.SetStateAction<string>>;
-    handleImagePath: React.Dispatch<React.SetStateAction<string>>;
-  }
+  setActive: (active: boolean) => void;
+  setTitle: (active: string) => void;
+  setDescription: (active: string) => void;
+  setImagePath: (active: string) => void;
+}
